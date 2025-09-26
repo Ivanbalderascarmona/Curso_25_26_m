@@ -15,7 +15,7 @@ console.log(frutas);
 
 console.log(frutas.concat([1,2,3,4,5,6]));
 
-// * Mejor forma de hacer lo mismo usando ... delante del array (se llama spread operator)
+// * Mejor forma de concatenar usando ... delante del array (se llama spread operator)
 
 const edades = [1,2,3,4,5,6];
 const ArrayConcat = [...edades,...frutas];
@@ -64,6 +64,11 @@ frutas2.reduce((acc, fruta) =>  {
 
 // # 5. Dado el siguiente array bidimensional [[1,2],[3,4],[5,6]] aplanar dicho array en un array unidimensional
 
+const arrayBidimensional=[[1,2],[3,4],[5,6]];
+const arrayUnidimensional= arrayBidimensional.reduce((arrayAplanado, subArray) => [...arrayAplanado, ...subArray] , [] );
+
+console.log("El array unidimensional es: ", arrayUnidimensional);
+
 // * array de objetos
 
 const usuarios= [
@@ -77,13 +82,12 @@ const usuarios= [
 ];
 
 // * dame la información del usuario cuyo nombre es Maria no muta el array original
-
 usuarios.find(usuario => usuario.name.toLowerCase() === "maria");
 
 // * dame todos los usuarios cuya edad es superior o igual a 40
 
 usuarios.find(usuario => usuario.age >= 40) || 0; //*   El ?? delvuelve el valor de la izquierda a no ser que sea undefined o null que entonces te devolvera lo de la derecha
-console.log(usuarios.find(usuario => Number(usuario.age) >= 40) ?? {});
+console.log("Los usuarios cuya edad es >= a 40 son: ", usuarios.find(usuario => Number(usuario.age) >= 40) ?? {});
 
 //* Dado el siguiente array usuarios, devolver un array con solo los nombres de los usuarios que tienen en su biblioteca mas de 20 libros
 
@@ -96,3 +100,24 @@ console.log("El promedio total de los libros es: ",usuarios.reduce((priceMedium,
 //* Decir que usuarios no tienen libros
 
 console.log("Los usuarios con 0 libros son: ",usuarios.reduce((usersBooks, usuario) => (usuario.data.books === 0 && usersBooks.push(usuario.name), usersBooks), []));
+
+const productos = [
+    {id: 1, nombre: 'Laptop', precio: 1200, stock: 5, categoria: 'Tecnología'},
+    {id: 2, nombre: 'Camiseta', precio: 35, stock: 15, categoria: 'Ropa'},
+    {id: 3, nombre: 'Monitor', precio: 300, stock: 0, categoria: 'Tecnología'},
+    {id: 4, nombre: 'Libro', precio: 20, stock: 50, categoria: 'Literatura'},
+    {id: 5, nombre: 'Móvil', precio: 800, stock: 10, categoria: 'Tecnología'},
+    {id: 6, nombre: 'Pantalón', precio: 60, stock: 5, categoria: 'Ropa'}
+];
+
+// # Se pide
+
+/*
+    # 1. Obtener un array con los nombres de todos los productos que están agotados.
+    # 2. Calcular el valor total del inventario (precio * stock) de todos los productos.
+    # 3. Filtrar los productos que pertenecen a la categoría 'Tecnología' y tienen un precio mayor a 500.
+    # 4. Crear un nuevo array de productos aplicando un descuento del 10% a todos los productos de la categoría 'Ropa'.
+*/
+
+// Ej 1:
+console.log("Los productos agotados son: ", productos.reduce( (nombreProduct, producto) => (producto.stock === 0 && nombreProduct.push(producto.nombre), nombreProduct) , []));
