@@ -120,4 +120,25 @@ const productos = [
 */
 
 // Ej 1:
-console.log("Los productos agotados son: ", productos.reduce( (nombreProduct, producto) => (producto.stock === 0 && nombreProduct.push(producto.nombre), nombreProduct) , []));
+
+let prodOutStock= productos.reduce( (nombreProduct, producto) => (producto.stock === 0 && nombreProduct.push(producto.nombre), nombreProduct) , []);
+
+console.log("Los productos agotados son: ", prodOutStock );
+
+// Ej 2:
+
+let totalValue= productos.reduce((value, producto) => value += producto.stock * producto.precio , 0 );
+
+console.log("El valor total de los productos es: ", totalValue);
+
+// Ej 3: 
+
+let productsTecs = productos.filter(producto => producto.categoria.toLowerCase() === 'tecnología' && producto.precio > 500);
+
+console.log("Los productos de categoria 'Tecnología' y con un precio mayor a 500 son: ", productsTecs)
+
+// Ej 4: 
+
+let discountProducts = productos.map( producto => producto.categoria.toLowerCase() === 'ropa' ? { ...producto, precio: producto.precio * 0.9 } : producto);
+
+console.log("Los productos con descuentos en ropa aplicados son: ", discountProducts);
