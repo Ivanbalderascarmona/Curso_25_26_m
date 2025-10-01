@@ -50,3 +50,10 @@ const frutas = ["manzana", "pera", "fresa", "mandarina",];
 
 // * Nullish Coalescing
 // En caso de que esto sea null o undefined ?? se hace esto
+
+// * spread operator
+// ...array para convertir un array en un objeto
+
+// * some() -> devuelve true si alguno de los elementos cumple la condición
+
+// * findIndex() -> devuelve el indice del array donde se encuentra el objeto o -1 si no lo encuentra
