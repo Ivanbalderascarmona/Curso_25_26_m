@@ -56,4 +56,52 @@ const frutas = ["manzana", "pera", "fresa", "mandarina",];
 
 // * some() -> devuelve true si alguno de los elementos cumple la condición
 
+// * every() -> devuelve true si todos los elementos cumplen la condición
+
 // * findIndex() -> devuelve el indice del array donde se encuentra el objeto o -1 si no lo encuentra
+
+// * includes() -> devuelve true si el array contiene el objeto
+
+// * para obtener las claves de un objeto : Object.keys()
+
+// const claves = Object.keys(usuario); // [name, email, active]
+
+// * para sacar los valores de un objeto: Object.values()
+
+// * obtener pares [clave,valor] <--- entries()
+
+
+// *destructuring
+
+// const { nombre,email } = usuarioBD; // --> const nombre = usuarioBD.nombre; const email = usuarioBD.email;
+
+// const data= [1,2,3,4,5];
+
+// * const [ a,b,c ] = data; // a=1, b=3, c=[3]
+
+// * const [ a1,b2,,c3 ] = data; // a=1, b=2, c=[4]
+
+// * const [ a2, b2, ...c2 ] = data; // a=1, b=2, c=[4,5]
+
+// * function vData (array){
+//     const [ v1,v2 ] = array;
+//     console.log("v1:",v1);
+//     console.log("v2:",v2);
+// }
+// vData([1,2,3,4,5]);
+
+// const usuario3= {
+//     id:1,
+//     info: {
+//         username: "ivanbc",
+//         redes: ["twitter", "github", "linkedin"]
+//     },
+// };
+
+// * const {info:{username,redes:[ r1,r2 ]}} = usuario3;
+
+/*
+username ---> ivanbc
+r1 ---> twitter
+r2 ---> github
+*/
