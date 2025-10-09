@@ -7,8 +7,9 @@
     }
 */
 
-import { uuid } from 'uuid';
-import { bcrypt } from 'bcrypt';
+import { v4 as uuid } from "uuid";
+import bcrypt from "bcryptjs";
+
 
 const ARRAY_NAME= import.meta.env.VITE_ARRAY_NAME;
 
@@ -20,14 +21,14 @@ const ARRAY_NAME= import.meta.env.VITE_ARRAY_NAME;
  * @param {string} password - Contraseña del usuario.
  * @param {string} tipo - Que tipo de de estructura usa. Por default es "array"
  */
-const registrarUsuarioArray = (username, password, tipo="array") => {ç
+export const registrarUsuarioArray = (username, password, tipo="array") => {
     
   // Validaciones de tipo
     if (typeof username !== 'string' || typeof password !== 'string' || typeof tipo !== 'string'){
         throw new Error("❌ Datos inválidos");
     }
   // Validar que sea de tipo array
-    if (tipoClean.toLowerCase().trim() !== "array") {
+    if (tipo.toLowerCase().trim() !== "array") {
         throw new Error("❌ El tipo debe ser 'array'");
     }
 
@@ -65,7 +66,7 @@ const registrarUsuarioArray = (username, password, tipo="array") => {ç
  * @param {string} password - Contraseña del usuario a loguearse.
  * @param {string} tipo - Tipo de dato del usuario. Por defecto "array"
  */
-const loginUsuarioArray = (username, password, tipo="array") => {
+export const loginUsuarioArray = (username, password, tipo="array") => {
     // Validaciones de tipo
     if (typeof username !== 'string' || typeof password !== 'string' || typeof tipo !== 'string'){
         throw new Error("❌ Datos inválidos");
@@ -85,8 +86,11 @@ const loginUsuarioArray = (username, password, tipo="array") => {
     const usuarios = JSON.parse(localStorage.getItem(ARRAY_NAME));
 
      // Verificar si el usuario existe
-    if (!usuarios.find(user => user.username.toLowerCase() === usernameClean.toLowerCase()) || !usuarios.find(user=>user.password === bcrypt.hashSync(passwordClean, 10))) {
-        throw new Error("❌ El usuario no existe");
+    const user = usuarios.find(u => u.username.toLowerCase() === usernameClean.toLowerCase());
+    
+    // Verificar si el usuario existe y si la contraseña es correcta
+    if (!user || !bcrypt.compareSync(passwordClean, user.passwordHash)) {
+        throw new Error("❌ Usuario o contraseña incorrectos");
     }
 
     console.info("✅ El usuario se ha logueado correctamente.");
@@ -99,7 +103,7 @@ const loginUsuarioArray = (username, password, tipo="array") => {
  * @param {string} passwordNueva - Contraseña nueva del usuario.
  * @param {string} tipo - Tipo de la estructura de datos. Por default es "map"
  */
-const cambiarPasswordArray = (username, passwordActual, passwordNueva, tipo="array")=> {
+export const cambiarPasswordArray = (username, passwordActual, passwordNueva, tipo="array")=> {
     // Validaciones de tipo
     if (typeof username !== 'string' || typeof passwordActual !== 'string' || typeof tipo !== 'string' || typeof passwordNueva !== 'string'){
         throw new Error("❌ Datos inválidos");

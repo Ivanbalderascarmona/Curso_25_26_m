@@ -7,8 +7,9 @@
     }
 */
 
-import { uuid } from 'uuid';
-import { bcrypt } from 'bcrypt';
+import { v4 as uuid } from "uuid";
+import bcrypt from "bcryptjs";
+
 
 const MAP_NAME= import.meta.env.VITE_MAP_NAME;
 
@@ -18,7 +19,7 @@ const MAP_NAME= import.meta.env.VITE_MAP_NAME;
  * @param {string} password - Contraseña del usuario a registrar
  * @param {string} tipo - Tipo de dato del usuario. Por default es "map"
  */
-const registrarUsuarioMap = (username, password, tipo="map") => {
+export const registrarUsuarioMap = (username, password, tipo="map") => {
     // Validaciones de tipo
     if (typeof username !== 'string' || typeof password !== 'string' || typeof tipo !== 'string'){
         throw new Error("❌ Datos inválidos");
@@ -63,7 +64,7 @@ const registrarUsuarioMap = (username, password, tipo="map") => {
  * @param {string} password - Contraseña del usuario al que se desea acceder.
  * @param {string} tipo - Tipo de estructura de datos del usuario. Por defecto es "map"
  */
-const loginUsuarioMap = (username, password, tipo="map") => {
+export const loginUsuarioMap = (username, password, tipo="map") => {
     // Validaciones de tipo
     if (typeof username !== 'string' || typeof password !== 'string'  || typeof tipo !== 'string'){
         throw new Error("❌ Datos inválidos");
@@ -91,3 +92,38 @@ const loginUsuarioMap = (username, password, tipo="map") => {
     console.info("✅ El usuario se ha logueado correctamente.");
 }
 
+/**
+ * Esta función realiza la acción de cambiar la contraseña de un usuario
+ * @param {string} username - Nombre del usuario
+ * @param {string} passwordActual - Contraseña actual asociada al usuario
+ * @param {string} passwordNueva - Contraseña que se  quiere poner
+ * @param {string} tipo - Tipo de la estructura de datos. Por default es "map"
+ */
+export const cambiarPasswordMap = (username, passwordActual, passwordNueva, tipo="map") => {
+    // Validación de tipo
+    if (typeof username !== "string" || typeof passwordActual !== "string" || typeof passwordNueva !== "string" || typeof tipo !== "string" ){
+        throw new Error("❌ Datos inválidos");
+    }
+
+    // Validar que sea de tipo array
+    if(tipo.toLowerCase().trim() !== "map"){
+        throw new Error("❌ El tipo debe ser 'map'");
+    }
+
+    const usernameClean = username.trim();
+    const passwordActualClean = passwordActual.trim();
+    const passwordNuevaClean = passwordNueva.trim();
+
+    // Deserializar map
+    const usuarios = new Map(JSON.parse(localStorage.getItem(MAP_NAME)));
+
+    //Comprobar que el usuario existe
+    if(!usuarios.has(usernameClean) || !bcrypt.compareSync(passwordActualClean, usuarios.get(usernameClean).passwordHash)){
+        throw new Error("❌ El usuario o contraseña incorrectos.");
+    }
+
+    usuarios.set(usernameClean,usuarios.get(usernameClean).passwordHash = bcrypt.hashSync(passwordNuevaClean, 10));
+    localStorage.setItem(MAP_NAME, JSON.stringify(Array.from(usuarios.entries())));
+
+    console.info("✅ Se ha cambiado la contraseña correctamente.");
+};
