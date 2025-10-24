@@ -208,9 +208,17 @@ const clientes: Cliente[] = [
 */
 
 function generarMapaClientes(clientes: Cliente[]): Map<number, {nombre:string, email:string, telefono:string}> {
-    
+    const mapaClientes = new Map<number, {nombre:string, email:string, telefono:string}>();
 
-    return
+    clientes.forEach((cliente) => {
+        mapaClientes.set(cliente.id, {
+            nombre: cliente.nombre,
+            email: cliente.email,
+            telefono: cliente.telefono,
+        });
+    });
+
+    return mapaClientes;
 }
 
 
@@ -223,3 +231,72 @@ function generarMapaClientes(clientes: Cliente[]): Map<number, {nombre:string, e
 // probar con 10 5 y 10 0
 
 // ¿se podria ampliar a otras operaciones?
+
+interface Operacion {
+    tipo: "suma" | "resta" | "multiplicacion" | "division";
+    operando1: number;
+    operando2: number;
+}
+
+/**
+ * 
+ * @param operacion - 
+ * @returns 
+ */
+function calculadora(operacion: Operacion): number {
+    switch (operacion.tipo) {
+        case "suma":
+            return operacion.operando1 + operacion.operando2;
+        case "resta":
+            return operacion.operando1 - operacion.operando2;
+        case "multiplicacion":
+            return operacion.operando1 * operacion.operando2;
+        case "division":
+            return operacion.operando1 / operacion.operando2;
+        default:
+            return 0;
+    }
+}
+console.log(calculadora({tipo: "suma", operando1: 10, operando2: 5}));
+
+
+// <---- any | unknown ----> es mejor usar el unknown
+
+// <---- si se le pone una ? significa que es opcional
+// function sumarVarios(n1: number = 0, n2: number = 0, n3?:number):number {
+// }
+
+// interface Usuarios{
+//     nombre:string;
+// }
+// type Datos = {
+//     nombreEmpresa:string;
+// }
+
+// <---- map ---->
+
+const edades = new Map<string, number>();
+edades.set("ivan",20);
+edades.has("ivan");
+interface Datos {
+    nombre:string;
+    email:string;
+    cp:number;
+}
+
+const Usuarios = new Map<string, Datos>();
+Usuarios.set("ivan", {
+    nombre:"ivan", 
+    email:"ivan@gmail.com", 
+    cp:1803
+});
+
+
+// <---- Set ---->
+
+const mySet = new Set<number>();
+mySet.add(1);
+mySet.add(2);
+
+
+
