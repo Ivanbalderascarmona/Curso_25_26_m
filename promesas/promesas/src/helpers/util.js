@@ -1,6 +1,5 @@
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
-const API_KEY = import.meta.env.API_KEY;
 
 export function dataJSONPromise() {
     //Hacer una funcion que se traiga la data usando promise
@@ -17,7 +16,7 @@ export function dataJSONPromise() {
                 resolve(data);
             })
             .catch(error => console.log("Error ...", error))
-            .finally(message => console.log("Cerrando JSONPromise"));
+            .finally(message => console.log("Cerrando JSONPromise"))
 }
 export function createJSONPromise() {
     //Hacer una funcion que se traiga la data usando promise
@@ -63,4 +62,6 @@ export const dataJSONAsync = async () => {
         console.log("Error ...", error);
     }
 }
+
+
 

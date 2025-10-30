@@ -21,7 +21,7 @@ export function getWeatherPromise(city="Granada") {
             const weather = data.weather[0].main;
             switch(weather){
                 case "Mist" : console.log(`El clima es ${arrayImg[0]} ${weather} `); break;
-                case "Sunny" : console.log(`El clima es ${arrayImg[1]} ${weather} `); break;
+                case "Clear" : console.log(`El clima es ${arrayImg[1]} ${weather} `); break;
                 case "Rain" : console.log(`El clima es ${arrayImg[2]} ${weather} `); break;
                 case "Clouds" : console.log(`El clima es ${arrayImg[3]} ${weather} `); break;
             }
@@ -31,4 +31,31 @@ export function getWeatherPromise(city="Granada") {
         .catch(error => console.log("Error ...", error))
         .finally(() => console.log("Cerrando getWeatherPromise"));
         ;
+}
+
+export const getWeatherAsync = async (city = "Granada") =>   {
+    const URL = `${VITE_API_OPENWEATHER}?q=${city}&unit=metric&lang=es&appid=${VITE_API_KEY}`;
+    
+    try {
+        const response = await fetch(URL);
+        if(!response.ok) throw new Error("Error al obtener los datos");
+        
+        const data = await response.json();
+
+        console.log(`------clima de la ciudad ${city} -----------`)
+        console.log(`------Temperatura: ${data.main.temp} ºC `)
+        const arrayImg= ['☁️','☀️','🌧️','⛅'];
+        const weather = data.weather[0].main;
+        switch(weather){
+            case "Mist" : console.log(`El clima es ${arrayImg[0]} ${weather} `); break;
+            case "Clear" : console.log(`El clima es ${arrayImg[1]} ${weather} `); break;
+            case "Rain" : console.log(`El clima es ${arrayImg[2]} ${weather} `); break;
+            case "Clouds" : console.log(`El clima es ${arrayImg[3]} ${weather} `); break;
+        }
+        console.log(`------Humedad: ${data.main.humidity} % `)
+
+
+    } catch (error) {
+        console.log("Error ...",error)
+    }
 }
