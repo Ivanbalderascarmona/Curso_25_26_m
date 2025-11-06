@@ -1,4 +1,4 @@
-import { crearCatalogo, reproducirCancion, gestionarPlaylists} from "./helpers/bibliotecaMusical";
+import { crearCatalogo, reproducirCancion, gestionarPlaylists, construirIndiceBusqueda } from "./helpers/bibliotecaMusical";
 
 const app = () => {
     console.log("Bienvenido a la app")
@@ -36,5 +36,12 @@ const app = () => {
 
     playlists.eliminar("Rock Classics", 1);
     console.log(`\nDespués de eliminar, quedan ${playlists.obtener("Rock Classics").length} canciones`);
+
+    const indice = construirIndiceBusqueda();
+    console.log(`Índice construido con ${indice.size} términos únicos`);
+    console.log(`El término "rock" aparece en ${indice.get("rock").size} canciones`);
+    console.log(`El término "queen" aparece en ${indice.get("queen").size} canciones`);
+
+    
 }
 export default app;
