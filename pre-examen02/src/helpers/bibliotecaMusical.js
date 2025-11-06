@@ -1,8 +1,8 @@
 import { canciones } from "../db/db"
 
-const CATALOGO = "catalogo";
-const PLAYLISTS = "playlists";
-const INDICEBUSQUEDA = "indiceBusqueda";
+const CATALOGO = import.meta.env.VITE_CATALOGO;
+const PLAYLISTS = import.meta.env.VITE_PLAYLISTS;
+const INDICEBUSQUEDA = import.meta.env.VITE_INDICEBUSQUEDA;
 
 const guardarMapLocalStorage = (clave, myMap) => {
     if (typeof clave !== "string" || !(myMap instanceof Map)) {
@@ -29,27 +29,6 @@ const recuperarMapLocalStorage = (clave) => {
         return new Map();
     }
     return new Map(JSON.parse(data));
-}
-
-const guardarSetLocalStorage = (clave, mySet) => {
-    if (typeof clave !== "string" || !(mySet instanceof Set)) {
-        return false;
-    }
-    localStorage.setItem(clave, JSON.stringify(Array.from(mySet)));
-}
-
-const recuperarSetLocalStorage = (clave) => {
-    
-    if ( typeof clave !== "string") {
-        return false;
-    }
-    const data =localStorage
-        .getItem(clave.trim());
-
-    if (!data) {
-        return new Set();
-    }
-    return new Set(JSON.parse(data));
 }
 
 //##### ---------------------------------------------- Parte 1 ----------------------------------------------
@@ -264,28 +243,164 @@ function construirIndiceBusqueda(){
 
 function buscarCanciones(termino, filtros = {}){
     const indice = recuperarMapLocalStorage(INDICEBUSQUEDA);
+
+    if(typeof termino !== "string") throw new Error("El término debe ser una cadena de texto.");
+
     const terminoClean = termino.trim().toLowerCase();
 
-    if(typeof terminoClean !== "string") throw new Error("El término debe ser una cadena de texto.");
+    
     
     if (!indice.has(terminoClean)) throw new Error(`El término ${terminoClean} no existe en el índice de términos.`);
     
     const setIds = indice.get(terminoClean);
     const catalogo = recuperarMapLocalStorage(CATALOGO);
-    const catalogoArray = Array.from(catalogo.values);
-    const arrayIds = Array.from(setIds);
+    const catalogoArray = Array.from(catalogo.values()) || [];
+    const arrayIds = Array.from(setIds) || [];
 
-    const cancionesTermino = catalogoArray.filter(cancion => arrayIds.has(cancion.id));
-    const cancionesFiltro = cancionesTermino.filter(cancion =>{
-        if (filtros.genero && typeof filtros.genero === "string") {
-            cancion.genero === filtros.genero
-        }
-        if(filtros.añoMin && !isNaN(filtros.añoMin) ){
+    const cancionesTermino = catalogoArray
+        .filter(cancion => arrayIds.includes(cancion.id));
+    const cancionesFiltro = cancionesTermino
+        .filter(cancion =>{
+            let cumple = true;
+            if (filtros.genero && typeof filtros.genero === "string") {
+                cumple = cumple && cancion.genero === filtros.genero;
+            }
+            if(filtros.añoMin && !isNaN(filtros.añoMin) ){
+                cumple = cumple && cancion.año >= filtros.añoMin;
+            }
+            if(filtros.añoMax && !isNaN(filtros.añoMax)){
+                cumple = cumple && cancion.año <= filtros.añoMax;
+            }
+            if (filtros.duracionMax && !isNaN(filtros.duracionMax)) {
+                cumple = cumple && cancion.duracion <= filtros.duracionMax;
+            }
+            return cumple;
+        })
+        .sort((a,b) => b.reproducciones - a.reproducciones);
 
-        }
-    });
+    return cancionesFiltro;
 
 }
 
+//##### ---------------------------------------------- Parte 4 ----------------------------------------------
 
-export {crearCatalogo, reproducirCancion, gestionarPlaylists, construirIndiceBusqueda};
+//# Función 6
+/**
+ *  Función 6: generarEstadisticasMusicales()
+ *  Qué debe hacer:
+ *  1. Recuperar el catálogo completo desde LocalStorage
+ *  2. Analizar todos los datos y calcular:
+ *  a) totalCanciones: cantidad total de canciones en el catálogo
+ *  b) duracionTotal: suma de todas las duraciones convertida a minutos (con 2 decimales)
+ *  c) cancionMasReproducida: objeto con la canción que tiene más reproducciones
+ *  d) generosPorCantidad: objeto con formato { "Rock": 5, "Pop": 3, "Hip-Hop": 1 }
+ *  e) artistasUnicos: cantidad de artistas diferentes (usa Set para contar)
+ *  f) añoPromedio: año promedio de todas las canciones (redondeado)
+ *  g) distribucionDecadas: objeto que agrupa canciones por década
+ *   { 
+ *      "1970s": 3, 
+ *       "1980s": 2, 
+ *       "1990s": 2, 
+ *      "2000s": 2, 
+ *       "2010s": 1 
+ *   }
+ *  3. Devolver un objeto con todas estas estadísticas
+ *  Pistas:
+ *  Para las décadas: Math.floor(año / 10) * 10 + "s"
+ *  Usa reduce() para calcular sumas y promedios
+ *  Usa Math.max() con spread operator para encontrar máximos
+ */
+function generarEstadisticasMusicales(){
+    const catalogo = recuperarMapLocalStorage(CATALOGO);
+    const arrayCatalogo = Array.from(catalogo.values());
+
+    if (arrayCatalogo.length === 0) {
+        return {
+            totalCanciones: 0,
+            duracionTotal: 0,
+            cancionMasReproducida: null,
+            generosPorCantidad: {},
+            artistasUnicos: 0,
+            añoPromedio: 0,
+            distribucionDecadas: {}
+        };
+    }
+
+    const totalCanciones = arrayCatalogo.length;
+    const duracionTotal = Number((arrayCatalogo
+        .reduce((duracionTotal, cancion) => duracionTotal += cancion.duracion,0) / 60).toFixed(2));
+        
+    const cancionMasReproducida = arrayCatalogo
+        .reduce((max, cancion) => cancion.reproducciones > max.reproducciones ? cancion : max , arrayCatalogo[0]);
+
+    const generosPorCantidad = {};
+    const artistasUnicos=new Set();
+    
+    arrayCatalogo.forEach(cancion => {
+        generosPorCantidad[cancion.genero] = (generosPorCantidad[cancion.genero] || 0) + 1;
+        artistasUnicos.add(cancion.artista);
+    });
+    
+    const añoPromedio = Math.round(arrayCatalogo
+        .reduce((sumaAños, cancion) => sumaAños += cancion.año, 0) / totalCanciones);
+
+    const distribucionDecadas = {};
+    arrayCatalogo.forEach(cancion => {
+        const decada = Math.floor(cancion.año / 10) * 10 + "s"
+        distribucionDecadas[decada] = (distribucionDecadas[decada] || 0) + 1;
+    });
+
+    return {
+        totalCanciones,
+        duracionTotal,
+        cancionMasReproducida,
+        generosPorCantidad,
+        artistasUnicos: artistasUnicos.size,
+        añoPromedio,
+        distribucionDecadas
+    }
+}
+
+
+function generarRecomendaciones(idCancionBase, cantidad = 3){
+    const idCancion=Number(idCancionBase);
+    const cantidadCanciones = Number(cantidad);
+    const catalogo = recuperarMapLocalStorage(CATALOGO);
+    const arrayCatalogo = Array.from(catalogo.values());
+
+    if(!catalogo.has(idCancion)) throw new Error("La cancion no existe en el catálogo");
+    const cancionBase = catalogo.get(idCancion);
+    const cancionesSimilares = arrayCatalogo.map(cancion => {
+        let puntos = 0;
+        const razones = [];
+        if(cancionBase.artista === cancion.artista){
+            puntos += 5;
+            razones.push("Mismo artista");
+        }
+        if(cancionBase.genero === cancion.genero){
+            puntos += 3;
+            razones.push("Mismo genero");
+        }
+        if(cancion.año <= cancionBase.año + 5 && cancion.año >= cancionBase.año - 5){
+            puntos += 2;
+            razones.push("Mismo rango de fecha de lanzamiento");
+        }
+        if(cancion.duracion <= cancionBase.duracion + 60 && cancion.duracion >= cancionBase.duracion - 60){
+            puntos += 1;
+            razones.push("Mismo rango de duracion");
+        }
+        return {
+            cancion: {
+                ...cancion
+            },
+            puntuacion: puntos,
+            razones
+        }
+    })
+    .filter(cancion => cancion.cancion.id!== idCancion).sort((a,b) => b.puntuacion - a.puntuacion).slice(0,cantidadCanciones);
+    return cancionesSimilares;
+    
+}
+
+
+export {crearCatalogo, reproducirCancion, gestionarPlaylists, construirIndiceBusqueda, buscarCanciones, generarEstadisticasMusicales, generarRecomendaciones };

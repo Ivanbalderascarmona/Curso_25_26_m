@@ -69,7 +69,9 @@ export function gestionarPlayList() {
     for(const [nombre, ids] of playLists){
         playListsConSets.set(nombre, new Set(ids) )
     }
+
     function guardarPlayList(){
+        guardarSetEnLocalstorage(PLAYLISTS, playListsConSets);
         
     }
     function crear(nombrePlayList){
