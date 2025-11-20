@@ -1,5 +1,6 @@
 import { imagesData } from "../data/images";
 import { createImageGrid } from "./ImageCard";
+import createImageModal from "./ImageModal";
 
 export default function createGalleryApp() {
     // # contenedor principal
@@ -36,23 +37,31 @@ export default function createGalleryApp() {
     // contador de favoritos
 
     const counterComponent = document.createElement("h2");
-    counterComponent.textContent = "<------ Aquí irá el componente FavoritesCounter ------>";
+    counterComponent.textContent = "Tienes 0 favoritos.";
+    counterComponent.className = "text-center text-xl font-semibold mb-4 text-orange-600";
+
+
+    function updateFavoritosCounter() {
+        const favoritos = imagesData.filter(image => image.isFavorite).length;
+        counterComponent.textContent = `Tienes ${favoritos} favoritos.`;
+    };
 
     // modal de imagen
 
-    const imageModal = document.createElement("h2");
-    imageModal.textContent = "<------ Aquí irá el componente ImageModal ------>";
+    const imageModal = createImageModal();
 
     // grid de imágenes
     
     const gridComponent = document.createElement("h2");
-    gridComponent.textContent = "<------ Aquí irá el componente Grid ------>";
-    const imageComponent = createImageGrid(imagesData);
+    const imageComponent = createImageGrid(imagesData, 
+        (image) => imageModal.openModal(image),
+        (image) => updateFavoritosCounter()
+    );
 
-    main.appendChild(imageComponent.element);
     main.appendChild(counterComponent);
-    main.appendChild(imageModal);
-    main.appendChild(gridComponent);    
+    main.appendChild(imageComponent.element);
+    main.appendChild(imageModal.element);
+    main.appendChild(gridComponent);
 
 
 

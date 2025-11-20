@@ -1,6 +1,10 @@
-import { imagesData } from "../data/images";
 
 export function createImageCard(image, onImageClick, onFavoriteToggle) {
+
+    // añadir la propiedad isFavorite si no existe
+    image.isFavorite = image.isFavorite ?? false;
+
+
     // # contenedor principal
     const card = document.createElement("div");
     card.className = "bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group relative";
@@ -14,9 +18,21 @@ export function createImageCard(image, onImageClick, onFavoriteToggle) {
     // img.onerror = () => {
     //     img.src = "Aqui iría una url de una imagen que simbolice no disponible";
     // }
-    card.appendChild(img);
+    
 
     // gestionar corazon de favorito
+    const favIcon = document.createElement("div");
+    favIcon.className = "absolute top-3 right-3 text-2xl select-none transition-transform group-hover:scale-110";
+    favIcon.textContent = image.isFavorite ? "❤️" : "🤍";
+
+    favIcon.onclick = (e) => {
+        e.stopPropagation();
+        image.isFavorite = !image.isFavorite;
+        favIcon.textContent = image.isFavorite ? "❤️" : "🤍";
+        if (onFavoriteToggle) {
+            onFavoriteToggle(image);
+        }
+    }
 
     // informacion de la imagen
     const infoContainer = document.createElement("div");
@@ -25,7 +41,7 @@ export function createImageCard(image, onImageClick, onFavoriteToggle) {
     const title = document.createElement("h3");
     title.className = "text-lg text-gray-600 font-bold  mb-2";
     title.textContent = image.title;
-    
+
 
     const author = document.createElement("p");
     author.className = "font-semibold text-sm text-gray-600";
@@ -35,11 +51,14 @@ export function createImageCard(image, onImageClick, onFavoriteToggle) {
     infoContainer.appendChild(author);
 
     // introducir todo en card
+    card.appendChild(img);
+    card.appendChild(favIcon);
     card.appendChild(infoContainer);
+    
 
     // evento de la tarjeta
     card.onclick = () => {
-        alert(image.id); // recuerda la sustituiré por onImageClick
+        if (onImageClick) onImageClick(image); // recuerda la sustituiré por onImageClick
     }
 
     // retornar el componente
@@ -47,7 +66,16 @@ export function createImageCard(image, onImageClick, onFavoriteToggle) {
         element: card,
         // aqui iran las funciones
         // isFavorite <-- es favorita la imagen
+        isFavorite: () => image.isFavorite,
+
         // setFavorite <-- marca la imagen como favorita
+        setFavorite: (value) => {
+            image.isFavorite = value;
+            favIcon.textContent = value ?  "❤️" : "🤍";
+            if (onFavoriteToggle) {
+                onFavoriteToggle(image);
+            }
+        },
     };
 }
 
@@ -64,8 +92,6 @@ export function createImageGrid(images, onImageClick, onFavoriteToggle ) {
 
         grid.appendChild(cardComponent.element);
         cards.set(image.id, cardComponent);
-        
-        
         
     });
 

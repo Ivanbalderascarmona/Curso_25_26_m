@@ -1,10 +1,9 @@
 /**
- * Fuente de datos estÃ¡tica del ejercicio. Contiene los metadatos mÃ­nimos
- * que consume la interfaz (tÃ­tulo, autor, categorÃ­a, fecha y URL) y
+ * Fuente de datos estática del ejercicio. Contiene los metadatos mínimos
+ * que consume la interfaz (título, autor, categoría, fecha y URL) y
  * simula la respuesta de una API externa. El timestamp permite ordenar por
- * fecha y el identificador Ãºnico sirve para enlazar favoritos y abrir el
- * modal.
- * Estos registros se podrÃ­an sustituir por una llamada a una API real.
+ * fecha y el identificador único sirve para enlazar favoritos y abrir el
+ * modal. Estos registros podrían sustituirse por una llamada a una API real.
  */
 export const imagesData = [
     {
