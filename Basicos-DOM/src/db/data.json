@@ -1,0 +1,83 @@
+{
+  "bienvenida": {
+    "id": 1,
+    "texto": "Hola, bienvenido a JavaScript"
+  },
+  "tareas": [
+    {
+      "id": 1,
+      "texto": "Estudiar JavaScript",
+      "completada": false
+    },
+    {
+      "id": 2,
+      "texto": "Hacer ejercicios",
+      "completada": false
+    },
+    {
+      "id": 3,
+      "texto": "Crear un proyecto",
+      "completada": true
+    }
+  ],
+  "peliculas": [
+    {
+      "id": 1,
+      "titulo": "Inception",
+      "año": 2010,
+      "rating": 8.8
+    },
+    {
+      "id": 2,
+      "titulo": "The Dark Knight",
+      "año": 2008,
+      "rating": 9.0
+    },
+    {
+      "id": 3,
+      "titulo": "Interstellar",
+      "año": 2014,
+      "rating": 8.6
+    }
+  ],
+  "alojamientos": [
+    {
+      "id": 1,
+      "nombre": "Apartamento Centro",
+      "ubicacion": "Barcelona",
+      "precio": 85,
+      "rating": 4.7
+    },
+    {
+      "id": 2,
+      "nombre": "Hotel 4 Estrellas",
+      "ubicacion": "Barcelona",
+      "precio": 120,
+      "rating": 4.9
+    },
+    {
+      "id": 3,
+      "nombre": "Cabaña Playa",
+      "ubicacion": "Valencia",
+      "precio": 65,
+      "rating": 4.8
+    }
+  ],
+  "ubicaciones": [
+    {
+      "id": 1,
+      "nombre": "Barcelona",
+      "pais": "España"
+    },
+    {
+      "id": 2,
+      "nombre": "Valencia",
+      "pais": "España"
+    },
+    {
+      "id": 3,
+      "nombre": "Madrid",
+      "pais": "España"
+    }
+  ]
+}
