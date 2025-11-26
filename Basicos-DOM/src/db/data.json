@@ -7,7 +7,7 @@
     {
       "id": 1,
       "texto": "Estudiar JavaScript",
-      "completada": false
+      "completada": true
     },
     {
       "id": 2,
