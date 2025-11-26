@@ -1,0 +1,8 @@
+url a https://rickandmortyapi.com/api/character/?name=nombre
+
+crear un buscador dinámico (con cada pulsacion del teclado realizo la búsqueda) para que atraves de un formulario 
+utilizando el boton de buscar o un enter realizara una búsqueda por el nombre todas las posibles coincidencias. 
+Mostrando en un grid todos los resultados.
+-Utilizar fetch para traer los datos.
+- implementar una caché para que através de un map guarde las búsquedas anteriores.
+- Si busco dos veces la misma palabra, no lo buscara en la api sino que lo buscara en el map
