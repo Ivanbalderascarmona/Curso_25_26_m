@@ -54,6 +54,8 @@ export default function createEjercicio4() {
   const render = () => {
     console.log("Ej4: Ejecutando render");
     const mainContainer = document.createElement("div");
+    mainContainer.style.marginTop="20px";
+    mainContainer.innerHTML = "<h2>Ejercicio 4</h2>";
 
     const v1Wrapper = document.createElement("div");
     v1Wrapper.innerHTML = "<h3>Versión síncrona</h3>";
