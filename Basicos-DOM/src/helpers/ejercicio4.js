@@ -52,14 +52,11 @@ export default function createEjercicio4() {
   }
   // render FUNCTION
   const render = () => {
-    console.log("Ej4: Ejecutando render");
     const mainContainer = document.createElement("div");
-    mainContainer.style.marginTop="20px";
     mainContainer.innerHTML = "<h2>Ejercicio 4</h2>";
 
     const v1Wrapper = document.createElement("div");
     v1Wrapper.innerHTML = "<h3>Versión síncrona</h3>";
-    console.log("Ej4: Datos síncronos:", notFetching());
     v1Wrapper.appendChild(renderTable(notFetching()));
     mainContainer.appendChild(v1Wrapper);
 
@@ -67,11 +64,9 @@ export default function createEjercicio4() {
     v2Wrapper.innerHTML = "<h3>Versión asíncrona</h3>";
     fetching("alojamientos")
       .then((data) => {
-        console.log("Ej4: Datos asíncronos recibidos:", data);
         v2Wrapper.appendChild(renderTable(data));
       })
       .catch(err => {
-        console.log("Error ",err);
         throw err;
       });
     

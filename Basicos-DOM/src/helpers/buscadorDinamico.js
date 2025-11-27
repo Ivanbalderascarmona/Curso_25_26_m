@@ -11,7 +11,7 @@ const cache = new Map();
 
 const buscadorDinamico = () => {
   const buscadorContainer = document.createElement("div");
-  buscadorContainer.style.marginTop="20px"
+  buscadorContainer.style.marginTop="20px";
 
   const h2 = document.createElement("h2");
   h2.textContent = "Buscador de personajes";
@@ -21,7 +21,7 @@ const buscadorDinamico = () => {
 
   const inputForm = document.createElement("input");
   inputForm.id = "inputForm";
-  inputForm.type="text",
+  inputForm.type="text";
   inputForm.placeholder="Buscar personaje...";
   inputForm.autocomplete="off";
 
@@ -52,7 +52,7 @@ const buscadorDinamico = () => {
     gridResultDiv.style.color="#000000ff"
     personajes.forEach(personaje => {
       const card = document.createElement("div");
-      card.style.border="1px solid #ccc",
+      card.style.border="1px solid #ccc";
       card.style.padding="10px";
       card.style.textAlign="center";
 

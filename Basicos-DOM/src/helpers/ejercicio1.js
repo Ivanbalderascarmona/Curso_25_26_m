@@ -23,7 +23,7 @@ export default function createEjercicio1() {
   function render() {
     const container = document.createElement("div");
     const title = document.createElement("h2");
-    title.textContent = "Aplicación";
+    title.textContent = "Ejercicio 1";
 
     const parrafo = document.createElement("p");
     parrafo.classList.add("welcome-message");

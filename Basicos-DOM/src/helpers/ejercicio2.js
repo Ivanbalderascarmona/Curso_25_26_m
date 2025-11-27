@@ -22,7 +22,6 @@ export default function createEjercicio2() {
 
   const render =  () => {
     const mainContainer = document.createElement("div");
-    mainContainer.style.marginTop="20px";
     mainContainer.innerHTML = "<h2>Ejercicio 2</h2>";
 
     const v2Wrapper = document.createElement("div");

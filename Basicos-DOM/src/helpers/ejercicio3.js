@@ -51,7 +51,6 @@ export default function createEjercicio3() {
 
   const render = () => {
     const mainContainer = document.createElement("div");
-    mainContainer.style.marginTop="20px";
     mainContainer.innerHTML = "<h2>Ejercicio 3</h2>";
     // version sincrona
     const v1Wrapper = document.createElement("div");
