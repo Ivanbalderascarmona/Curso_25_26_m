@@ -101,10 +101,19 @@ const buscadorDinamico = () => {
     renderResults(personajes);
   };
 
-  // inputForm.addEventListener("input", busqueda);
+  let timeoutId;
+  inputForm.addEventListener("input", (e) => {
+    const texto = e.target.value;
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => {
+      busqueda(texto);
+    }, 500);
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    
     busqueda();
   });
 

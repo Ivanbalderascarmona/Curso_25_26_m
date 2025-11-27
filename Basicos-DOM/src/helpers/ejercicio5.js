@@ -14,13 +14,6 @@ const createEjercicio5 = () => {
 
     const select = document.createElement("select");
     select.id="select";
-    // <form action="">
-    //   <select name="opcion" id="opcion">
-    //     <option value="1"></option>
-    //     <option value="2"></option>
-    //     <option value="3"></option>
-    //   </select>
-    // </form>
     const defaultOption = document.createElement("option");
     defaultOption.value="";
     defaultOption.textContent="Elige una ubicación";
@@ -52,7 +45,6 @@ const createEjercicio5 = () => {
     const submitButton = document.createElement("button");
     submitButton.type="submit";
     submitButton.textContent="Reservar";
-    submitButton.classList.add("form-row");
 
     form.appendChild(select);
     form.appendChild(check_in);
