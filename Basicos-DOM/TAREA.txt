@@ -1,0 +1,55 @@
+
+<----Primer Ejercicio---->
+crea una aplcacion de consulta de clima constituida por 6 elementos 
+subdivididos en un header, un footer y un main, el header y el footer se 
+construyen con los elementos vistos en el DOM.
+El main esta subdividido en tres componentes que son:
+searchCard
+weatherCard
+favoriteCard
+
+-El componente serch se encarga de buscar dentro de la api la ciudad que queramos
+Ejemplificar el uso de un almacenamiento con map en el localStorage.
+
+-El componente weatherCard dispondremos de un array de 15 imagenes almacenadas
+en la carpeta public/img con los diferentes estados climatologicos posibles.
+
+-La tarjeta favoriteCard almacenara las ciudades o tarjetas favoritas.
+
+-Para hacer favorita una ciudad basta con dar dos click de raton encima de la 
+card y se guardara en la cardFavorite.
+
+-Para sacar una card de la favorita se pula click derecha sobre la card con 
+confirmacion.
+
+-Con persistencia en localStorage.
+
+
+<----Segundo Ejercicio---->
+
+Crear un sistema Booking de sistema de gestion de reservas que permita
+ejemplificar la reserva en un hotel.
+
+El sistema tendra la siguiente interfaz con un header con el nombre de la 
+empresa, un main compuesto por:
+-Un desplegable donde puedes seleccionar de una api privada con json server
+las ciudades disponibles 
+-Dos input date de check_in y check_out donde el check_in no sea mayor 
+que el check_out
+-El numero de huespedes
+
+Automaticamente me mostrara usando un componente cardHotel todos aquellos 
+hoteles que tengan disponibilidad en el rango de fechas indicados.
+
+Cuando le haga un click a la tarjeta automaticamente se añadira en un 
+componente carrito reserva la informacion del hotel, numero de personas, 
+numero de estrellas y total a pagar.
+
+El total a pagar es = al numero de huespedes por el precio de la habitacion 
+que tiene el hotel y los dias.
+
+Desglosar el iva
+
+Finalizar reserva reseteando todo.
+
+Hay persistencia de datos

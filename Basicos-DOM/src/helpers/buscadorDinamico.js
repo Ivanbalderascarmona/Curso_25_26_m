@@ -7,7 +7,11 @@
 // - Si busco dos veces la misma palabra, no lo buscara en la api sino que lo buscara en el map
 
 const URL_RICK=import.meta.env.VITE_URL_Rick;
-const cache = new Map();
+
+const state = {
+    cache: new Map(),
+    isLoading: false
+  }
 
 const buscadorDinamico = () => {
   const buscadorContainer = document.createElement("div");
@@ -40,8 +44,6 @@ const buscadorDinamico = () => {
   buscadorContainer.appendChild(form);
   buscadorContainer.appendChild(gridResultDiv);
 
-
-
   const renderResults = (personajes) => {
     gridResultDiv.innerHTML = "";
     if (typeof personajes === "string") {
@@ -73,8 +75,9 @@ const buscadorDinamico = () => {
   }
 
   const fetchData = async (name) => {
-    if(cache.has(name)){
-      return cache.get(name);
+    if(state.cache.has(name)){
+      console.log("Retornado mediante la caché")
+      return state.cache.get(name);
     }
 
     try {
@@ -83,12 +86,24 @@ const buscadorDinamico = () => {
         return name;
       }
       const data = await response.json();
+      state.cache.set(name, data.results);
       return data.results;
     } catch (err) {
       console.log("Error: ",err);
       throw err;
     }
   }
+  const loading = async () => {
+    const loader = document.createElement("span");
+    loader.classList.add("loader");
+    loader.style.display="block";
+    loader.style.margin="40px auto";
+    loader.style.width="40px";
+    loader.style.height="40px";
+    gridResultDiv.appendChild(loader);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+
 
   const busqueda = async () => {
     const valor = inputForm.value.trim().toLowerCase();
@@ -96,20 +111,35 @@ const buscadorDinamico = () => {
       gridResultDiv.innerHTML="";
       return;
     }
+    
+    if (!state.cache.has(valor)) {
+      await loading();
+    }
 
     const personajes = await fetchData(valor);
     renderResults(personajes);
   };
 
-  let timeoutId;
-  inputForm.addEventListener("input", (e) => {
-    const texto = e.target.value;
-    clearTimeout(timeoutId);
+  const debounce = (fn , delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        fn(...args);
+      }, delay);
+    }
+  }
 
-    timeoutId = setTimeout(() => {
-      busqueda(texto);
-    }, 500);
-  });
+  // let timeoutId;
+  // inputForm.addEventListener("input", (e) => {
+  //   const texto = e.target.value;
+  //   clearTimeout(timeoutId);
+
+  //   timeoutId = setTimeout(() => {
+  //     busqueda(texto);
+  //   }, 500);
+  // });
+  inputForm.addEventListener("input", debounce(busqueda, 500));
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
