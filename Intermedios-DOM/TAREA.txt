@@ -1,6 +1,7 @@
 
 <----Primer Ejercicio---->
-crea una aplcacion de consulta de clima constituida por 6 elementos 
+
+Crea una aplicacion de consulta de clima constituida por 6 elementos 
 subdivididos en un header, un footer y un main, el header y el footer se 
 construyen con los elementos vistos en el DOM.
 El main esta subdividido en tres componentes que son:
@@ -53,3 +54,7 @@ Desglosar el iva
 Finalizar reserva reseteando todo.
 
 Hay persistencia de datos
+
+1. Clear: 2. Clouds: 3. Rain: 4. Drizzle: 5. Snow: 6. Thunderstorm: 7. Mist: 
+8. Fog: 9. Haze: 10. Smoke: 11. Dust: 12. Sand: 13. Squall: 14. Tornado: 
+15. Extreme:
