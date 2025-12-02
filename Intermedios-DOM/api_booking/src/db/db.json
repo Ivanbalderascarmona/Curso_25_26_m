@@ -1,0 +1,148 @@
+{
+  "cities": [
+    { "id": 1, "name": "Barcelona", "code": "BCN" },
+    { "id": 2, "name": "Madrid", "code": "MAD" },
+    { "id": 3, "name": "Sevilla", "code": "SEV" }
+  ],
+  "hotels": [
+    {
+      "id": 101,
+      "name": "Grand Palace Barcelona",
+      "city_id": 1,
+      "stars": 5,
+      "description": "Lujoso hotel en el corazón del Eixample.",
+      "room_price_per_night": 150,
+      "max_guests": 4,
+      "image_url": "https://placehold.co/600x400/003366/ffffff?text=Hotel+Barcelona+5*",
+      "room_type": "Doble Superior"
+    },
+    {
+      "id": 102,
+      "name": "Modern Art Hotel BCN",
+      "city_id": 1,
+      "stars": 4,
+      "description": "Diseño vanguardista cerca del mar.",
+      "room_price_per_night": 95,
+      "max_guests": 2,
+      "image_url": "https://placehold.co/600x400/660033/ffffff?text=Hotel+Barcelona+4*",
+      "room_type": "Standard"
+    },
+    {
+      "id": 201,
+      "name": "Central Suites Madrid",
+      "city_id": 2,
+      "stars": 3,
+      "description": "Excelente ubicación cerca de Sol.",
+      "room_price_per_night": 70,
+      "max_guests": 5,
+      "image_url": "https://placehold.co/600x400/006600/ffffff?text=Hotel+Madrid+3*",
+      "room_type": "Familiar"
+    },
+    {
+      "id": 202,
+      "name": "Luxury Retiro Palace",
+      "city_id": 2,
+      "stars": 5,
+      "description": "Vistas inmejorables al Parque del Retiro.",
+      "room_price_per_night": 220,
+      "max_guests": 4,
+      "image_url": "https://placehold.co/600x400/000088/ffffff?text=Hotel+Madrid+5*",
+      "room_type": "Suite Ejecutiva"
+    },
+    {
+      "id": 301,
+      "name": "Seville Charm Inn",
+      "city_id": 3,
+      "stars": 4,
+      "description": "Hotel boutique en el barrio de Santa Cruz.",
+      "room_price_per_night": 110,
+      "max_guests": 2,
+      "image_url": "https://placehold.co/600x400/ff6600/ffffff?text=Hotel+Sevilla+4*",
+      "room_type": "Doble Clásica"
+    }
+  ],
+  "availability": [
+    {
+      "hotel_id": 101,
+      "date": "2025-12-20",
+      "is_available": true
+    },
+    {
+      "hotel_id": 101,
+      "date": "2025-12-21",
+      "is_available": false
+    },
+    {
+      "hotel_id": 101,
+      "date": "2025-12-22",
+      "is_available": true
+    },
+    {
+      "hotel_id": 101,
+      "date": "2025-12-23",
+      "is_available": true
+    },
+    {
+      "hotel_id": 102,
+      "date": "2025-12-20",
+      "is_available": false
+    },
+    {
+      "hotel_id": 102,
+      "date": "2025-12-22",
+      "is_available": true
+    },
+    {
+      "hotel_id": 102,
+      "date": "2025-12-23",
+      "is_available": true
+    },
+    {
+      "hotel_id": 201,
+      "date": "2025-12-25",
+      "is_available": false
+    },
+    {
+      "hotel_id": 201,
+      "date": "2025-12-26",
+      "is_available": true
+    },
+    {
+      "hotel_id": 201,
+      "date": "2025-12-27",
+      "is_available": true
+    },
+    {
+      "hotel_id": 202,
+      "date": "2025-12-25",
+      "is_available": false
+    },
+    {
+      "hotel_id": 202,
+      "date": "2025-12-26",
+      "is_available": false
+    },
+    {
+      "hotel_id": 202,
+      "date": "2025-12-27",
+      "is_available": true
+    },
+    {
+      "hotel_id": 301,
+      "date": "2025-12-26",
+      "is_available": true
+    },
+    {
+      "hotel_id": 301,
+      "date": "2025-12-27",
+      "is_available": false
+    },
+    {
+      "hotel_id": 301,
+      "date": "2025-12-28",
+      "is_available": true
+    }
+    
+  ],
+  "reservations": []
+}
