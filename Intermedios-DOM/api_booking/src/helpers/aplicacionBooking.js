@@ -1,60 +1,59 @@
 import fetching from "../utils/fetching";
 
-export default function () {
+export default function createApiBooking() {
 
   const buildHeader = () => {
     const header = document.createElement("header");
-    header.textContent="Booking nevada";
+    header.textContent = "Booking nevada";
     return header;
   }
 
   const buildMain = () => {
     const main = document.createElement("main");
 
-
     const form = document.createElement("form");
-    form.id="form";
-    form.name="form";
+    form.id = "form";
+    form.name = "form";
 
     const selectCity = document.createElement("select");
-    selectCity.id="selectCity";
-    selectCity.name="selectCity";
-    selectCity.required=true;
-    selectCity.placeholder="Selecciona una ciudad";
-
+    selectCity.id = "selectCity";
+    selectCity.name = "selectCity";
+    selectCity.required = true;
+    
     const option = document.createElement("option");
-    option.value="";
-    option.disabled=true;
-    option.selected=true;
-    option.textContent="Selecciona una ciudad";
+    option.value = "";
+    option.disabled = true;
+    option.selected = true;
+    option.textContent = "Selecciona una ciudad";
     selectCity.appendChild(option);
 
     const inputCheckIn = document.createElement("input");
-    inputCheckIn.id="chekIn";
-    inputCheckIn.type="date";
-    inputCheckIn.name="checkIn";
-    inputCheckIn.required=true;
-    inputCheckIn.placeholder="Selecciona una fecha de entrada";
+    inputCheckIn.id = "chekIn";
+    inputCheckIn.type = "date";
+    inputCheckIn.name = "checkIn";
+    inputCheckIn.required = true;
+    inputCheckIn.placeholder = "Selecciona una fecha de entrada";
 
     const inputCheckOut = document.createElement("input");
-    inputCheckOut.id="chekOut";
-    inputCheckOut.type="date";
-    inputCheckOut.name="checkOut";
-    inputCheckOut.required=true;
-    inputCheckOut.placeholder="Selecciona una fecha de salida";
+    inputCheckOut.id = "chekOut";
+    inputCheckOut.type = "date";
+    inputCheckOut.name = "checkOut";
+    inputCheckOut.required = true;
+    inputCheckOut.placeholder = "Selecciona una fecha de salida";
 
     const inputNumHuespedes = document.createElement("input");
-    inputNumHuespedes.id="numHuespedes";
-    inputNumHuespedes.type="number";
-    inputNumHuespedes.name="numHuespedes";
-    inputNumHuespedes.required=true;
-    inputNumHuespedes.placeholder="Selecciona el numero de huespedes";
-    inputNumHuespedes.min="1";
-    inputNumHuespedes.max="10";
+    inputNumHuespedes.id = "numHuespedes";
+    inputNumHuespedes.type = "number";
+    inputNumHuespedes.name = "numHuespedes";
+    inputNumHuespedes.required = true;
+    inputNumHuespedes.placeholder = "Selecciona el numero de huespedes";
+    inputNumHuespedes.min = "1";
+    inputNumHuespedes.max = "10";
 
     const submitButton = document.createElement("button");
-    submitButton.type="submit";
-    submitButton.textContent="Buscar";
+    submitButton.type = "submit";
+    submitButton.id = "submitButton";
+    submitButton.textContent = "Buscar";
 
     form.appendChild(selectCity);
     form.appendChild(inputCheckIn);
@@ -64,13 +63,13 @@ export default function () {
 
 
     const cardContainer = document.createElement("div");
-    cardContainer.id="cardContainer";
-    cardContainer.name="cardContainer";
+    cardContainer.id = "cardContainer";
+    cardContainer.classList.add("cardContainer");
 
 
     const carritoReserva = document.createElement("div");
-    carritoReserva.id="carritoReserva";
-    carritoReserva.name="carritoReserva";
+    carritoReserva.id = "carritoReserva";
+    carritoReserva.name = "carritoReserva";
 
     main.appendChild(form);
     main.appendChild(cardContainer);
@@ -79,54 +78,41 @@ export default function () {
     return main;
   }
 
-  const updateCardContainer = (arrayHoteles) => {
-    const cardContainer = document.createElement("div");
-    cardContainer.classList.add("cardContainer");
+  const createHotelCard = (hotel) => {
+    const hotelCard = document.createElement("div");
+    hotelCard.classList.add("hotelCard");
 
-    arrayHoteles.forEach((hotel) => {
-      const hotelCard = document.createElement("div");
-      hotelCard.classList.add("hotelCard");
+    const name = document.createElement("h3");
+    name.textContent = hotel.name;
 
-      const name = document.createElement("h3");
-      name.textContent = hotel.name;
+    const description = document.createElement("p");
+    description.textContent = hotel.description;
 
-      const description = document.createElement("p");
-      description.textContent = hotel.description;
+    const stars = document.createElement("p");
+    stars.textContent = "⭐".repeat(hotel.stars);
 
-      const stars = document.createElement("p");
-      stars.textContent="⭐".repeat(hotel.stars);
+    const price = document.createElement("p");
+    price.textContent = `Precio por noche: ${hotel.room_price_per_night}`;
 
-      const price = document.createElement("p");
-      price.textContent = `Precio por noche: ${hotel.room_price_per_night}`;
+    const maxGuests = document.createElement("p");
+    maxGuests.textContent = `Maximo de huespedes: ${hotel.max_guests}`;
 
-      const maxGuests = document.createElement("p");
-      maxGuests.textContent = `Maximo de huespedes: ${hotel.max_guests}`;
-
-      hotelCard.appendChild(name);
-      hotelCard.appendChild(description);
-      hotelCard.appendChild(stars);
-      hotelCard.appendChild(price);
-      hotelCard.appendChild(maxGuests);
-
-      cardContainer.appendChild(hotelCard);
-    });
-
-    return cardContainer;
+    hotelCard.appendChild(name);
+    hotelCard.appendChild(description);
+    hotelCard.appendChild(stars);
+    hotelCard.appendChild(price);
+    hotelCard.appendChild(maxGuests);
+    
+    return hotelCard;
   }
 
   const buildFooter = () => {
     const footerContainer = document.createElement("footer");
 
     const copyright = document.createElement("p");
-    copyright.textContent ="Weather data provided by OpenWeather | © 2025 IvánBC."
-
-    const enlaceWeb = document.createElement("a");
-    enlaceWeb.href = "https://openweathermap.org/"
-    enlaceWeb.textContent="OpenWeather";
-    enlaceWeb.target="_blank";
+    copyright.textContent = "Weather data provided by Booking Nevada | © 2025 IvánBC."
 
     footerContainer.appendChild(copyright);
-    footerContainer.appendChild(enlaceWeb);
 
     return footerContainer;
   }
@@ -142,83 +128,138 @@ export default function () {
     const footerContainer = buildFooter();
     appContainer.appendChild(footerContainer);
 
-    const form = mainContainer.getElementById("form");
-    const selectCity = mainContainer.getElementById("selectCity");
-    const inputCheckIn = mainContainer.getElementById("chekIn");
-    const inputCheckOut = mainContainer.getElementById("chekOut");
-    const inputNumHuespedes = mainContainer.getElementById("numHuespedes");
-    const submitButton = mainContainer.getElementById("submitButton");
-    const cardContainer = mainContainer.getElementById("cardContainer");
-    const carritoReserva = mainContainer.getElementById("carritoReserva");
+    const form = mainContainer.querySelector("#form");
+    const selectCity = mainContainer.querySelector("#selectCity");
+    const inputCheckIn = mainContainer.querySelector("#chekIn");
+    const inputCheckOut = mainContainer.querySelector("#chekOut");
+    const inputNumHuespedes = mainContainer.querySelector("#numHuespedes");
+    const cardContainer = mainContainer.querySelector("#cardContainer");
 
-    form.addEventListener("submit", (e) => {
+    // Populate cities on load
+    const loadCities = async () => {
+      console.log("loadCities started");
+      try {
+        const cities = await fetching("cities");
+        console.log("Cities fetched:", cities);
+        cities.forEach(city => {
+          const option = document.createElement("option");
+          option.value = city.id;
+          option.textContent = city.name;
+          selectCity.appendChild(option);
+        });
+      } catch (error) {
+        console.error("Error loading cities:", error);
+        alert("Error al cargar las ciudades");
+      }
+    };
+    loadCities();
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const city = selectCity.value;
+      const cityId = parseInt(selectCity.value);
       const checkIn = inputCheckIn.value;
       const checkOut = inputCheckOut.value;
-      const numHuespedes = inputNumHuespedes.value;
-      
-      if(!city || !checkIn || !checkOut || !numHuespedes){
+      const numHuespedes = parseInt(inputNumHuespedes.value);
+
+      if (!cityId || !checkIn || !checkOut || !numHuespedes) {
         alert("Por favor, completa todos los campos");
         return;
       }
-      if(new Date(checkIn) >= new Date(checkOut)){
+      if (new Date(checkIn) >= new Date(checkOut)) {
         alert("La fecha de salida debe ser mayor que la fecha de entrada");
         return;
       }
-      const dataHotels = fetching("hotels")
-        .then(data => {
-          const arrayHoteles = data.filter((hotel) => {
-            return hotel.city_id === city;
-          })
-          return arrayHoteles;
-        })
-        .catch(err => {
-          throw new Error("Error al cargar la informacion de los hoteles. Error:", err)
-        })
 
-      const dataAvailability = fetching("availability")
-        .then(data => {
-          const arrayAvailability = data.filter((hotel) => {
-            return dataHotels.map(hotelArray => hotelArray.id).includes(hotel.hotel_id);
-          })
-          const mapHoteles = new Map();
-          arrayAvailability.forEach(hotel => {
-            if (!mapHoteles.has(hotel.hotel_id)) {
-              mapHoteles.set(hotel.hotel_id, []);
+      try {
+        // 1. Fetch Hotels in the city
+        const allHotels = await fetching("hotels");
+        const cityHotels = allHotels.filter(hotel => hotel.city_id === cityId);
+
+        if (cityHotels.length === 0) {
+            cardContainer.innerHTML = "";
+            const noHotelsMsg = document.createElement("p");
+            noHotelsMsg.textContent = "No hay hoteles disponibles en esta ciudad.";
+            cardContainer.appendChild(noHotelsMsg);
+            return;
+        }
+
+        // 2. Fetch Availability
+        const availabilityData = await fetching("availability");
+        
+        // Filter availability for the relevant hotels
+        const relevantAvailability = availabilityData.filter(avail => 
+            cityHotels.some(hotel => hotel.id === avail.hotel_id)
+        );
+
+        // Group availability by hotel
+        const availabilityByHotel = new Map();
+        relevantAvailability.forEach(avail => {
+            if (!availabilityByHotel.has(avail.hotel_id)) {
+                availabilityByHotel.set(avail.hotel_id, []);
             }
-            const hotelMap = mapHoteles.get(hotel.hotel_id);
-            hotelMap.push(hotel);
-            mapHoteles.set(hotel.hotel_id, hotelMap);
-          })
-          const arrayHotelesDisponibles = [];
-          mapHoteles.forEach((hotelMap, hotelId) => {
-            let fechasTotales = 0;
-            let fechasNoDisponibles=0;
-            hotelMap.forEach(hotel => {
-              if (new Date(hotel.date) >= new Date(checkIn) && new Date(hotel.date) <= new Date(checkOut)) {
-                if (!(hotel.is_available)) {
-                  fechasNoDisponibles++;
+            availabilityByHotel.get(avail.hotel_id).push(avail);
+        });
+
+        const availableHotelIds = [];
+
+        // Check availability for each hotel
+        cityHotels.forEach(hotel => {
+            const hotelAvailability = availabilityByHotel.get(hotel.id) || [];
+            
+            // Calculate total days requested
+            const start = new Date(checkIn);
+            const end = new Date(checkOut);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            
+            let availableDaysCount = 0;
+
+            // Check each day in the range
+            for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+                const dateString = d.toISOString().split('T')[0];
+                
+                const dayRecord = hotelAvailability.find(a => {
+                    // Handle both string date and timestamp if necessary, but assuming ISO string based on usage
+                    const recordDate = new Date(a.date).toISOString().split('T')[0];
+                    return recordDate === dateString;
+                });
+
+                if (dayRecord && dayRecord.is_available) {
+                    availableDaysCount++;
                 }
-                fechasTotales++;
-              }
-            })
-            if( fechasTotales >0 && fechasTotales-fechasNoDisponibles === fechasTotales){
-              arrayHotelesDisponibles.push(hotelId);
             }
-          })
-          return arrayHotelesDisponibles;
-        })
-        .catch(err => {
-          throw new Error("Error al cargar la informacion de la disponibilidad. Error:", err);
-        })
 
-      
-      
-      
-    })
+            // If the hotel is available for ALL requested days
+            // AND the hotel can accommodate the number of guests
+            if (availableDaysCount === diffDays && hotel.max_guests >= numHuespedes) {
+                availableHotelIds.push(hotel.id);
+            }
+        });
+
+        const availableHotels = cityHotels.filter(hotel => availableHotelIds.includes(hotel.id));
+
+        // Update DOM
+        cardContainer.innerHTML = ""; // Clear previous results
+        if (availableHotels.length === 0) {
+            const p = document.createElement("p");
+            p.textContent = "No se encontraron hoteles disponibles para las fechas y huéspedes seleccionados.";
+            cardContainer.appendChild(p);
+        } else {
+            availableHotels.forEach(hotel => {
+                cardContainer.appendChild(createHotelCard(hotel));
+            });
+        }
+
+      } catch (err) {
+        console.error("Error en la búsqueda:", err);
+        alert("Ocurrió un error al buscar hoteles.");
+      }
+    });
 
     return appContainer;
+  }
 
+  return {
+    render
   }
 }

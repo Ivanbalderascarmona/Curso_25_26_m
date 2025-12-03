@@ -73,7 +73,7 @@ export default function () {
   }
 
   const updateWeatherCard = (data) => {
-    const tempCelsius = Math.round(data.temp - 273.15); 
+    const tempCelsius = Math.round((data.temp - 273.15) * 100) / 100;
     const cardContainer = document.createElement("div");
     cardContainer.classList.add("weatherCard");
     
