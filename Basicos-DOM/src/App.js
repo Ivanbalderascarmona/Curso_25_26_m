@@ -6,6 +6,7 @@ import createEjercicio5 from "./helpers/ejercicio5";
 import createEjercicio6 from "./helpers/ejercicio6";
 import createEjercicio7 from "./helpers/ejercicio7";
 import createEjercicio8 from "./helpers/ejercicio8";
+import createEjercicio11 from "./helpers/ejercicio11";
 import createBuscadorDinamico from "./helpers/buscadorDinamico";
 
 export default function createApp() {
@@ -18,5 +19,6 @@ export default function createApp() {
   appDiv.appendChild(createEjercicio6().render());
   appDiv.appendChild(createEjercicio7().render());
   appDiv.appendChild(createEjercicio8().render());
+  appDiv.appendChild(createEjercicio11().render());
   appDiv.appendChild(createBuscadorDinamico().render());
 }
