@@ -19,6 +19,6 @@ export default function createApp() {
   appDiv.appendChild(createEjercicio6().render());
   appDiv.appendChild(createEjercicio7().render());
   appDiv.appendChild(createEjercicio8().render());
-  appDiv.appendChild(createEjercicio11().render());
+  appDiv.appendChild(createEjercicio11().render().element);
   appDiv.appendChild(createBuscadorDinamico().render());
 }

@@ -215,7 +215,7 @@ export default function createApiBooking() {
             let availableDaysCount = 0;
 
             // Check each day in the range
-            for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+            for (let d = start; d < end; d.setDate(d.getDate() + 1)) {
                 const dateString = d.toISOString().split('T')[0];
                 
                 const dayRecord = hotelAvailability.find(a => {
