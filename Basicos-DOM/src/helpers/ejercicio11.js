@@ -7,13 +7,14 @@
 export default function createEjercicio11() {
   const buildForm = ( ) => {
     const form = document.createElement("form");
+    form.classList.add("review-form");
 
     const p = document.createElement("p");
     p.id="comentarioValidacion";
     p.textContent="";
     
     const inputRestaurante = document.createElement("input");
-    inputRestaurante.type="test";
+    inputRestaurante.type="text";
     inputRestaurante.id="nombreRestaurante";
     inputRestaurante.placeholder="Ingrese el nombre del restaurante";
 
@@ -63,10 +64,7 @@ export default function createEjercicio11() {
         estrellas
       };
       const reseñas = localStorage.getItem("reseñas");
-      const arrayReseñas = [];
-      if (reseñas) {
-        arrayReseñas = JSON.parse(reseñas);
-      }
+      const arrayReseñas = reseñas ? JSON.parse(reseñas) : [];
       arrayReseñas.push(data);
       
       try{
@@ -77,19 +75,32 @@ export default function createEjercicio11() {
       p.classList.remove("error");
       p.classList.add("success");
       p.textContent="Reseña guardada exitosamente";
+
+      inputRestaurante.value="";
+      inputComentario.value="";
+      inputEstranger.value="";
       
     });
+
     return {
-      element: form,
+      element: form
     };
   };
 
   const buildReseñas = () => {
     const container = document.createElement("div");
+    container.classList.add("reviews-container");
+    const p = document.createElement("p");
+    p.classList.add("no-reviews-message");
 
-    const reseñas = localStorage.getItem("reseñas");
-    if (reseñas) {
-      const arrayReseñas = JSON.parse(reseñas);
+
+    const reseñas = localStorage.getItem("reseñas"); 
+    const arrayReseñas = reseñas ? JSON.parse(reseñas) : [];
+    if (arrayReseñas.length !== 0) {
+      p.textContent="";
+      
+      p.classList.remove("no-reviews-message");
+      
       arrayReseñas.forEach(reseña => {
         const reseñaCard = document.createElement("div");
         reseñaCard.classList.add("reseñaCard");
@@ -119,8 +130,9 @@ export default function createEjercicio11() {
         element: container
       };
     }else{
-      container.innerHTML="<p>No hay reseñas guardadas</p>";
+      p.textContent="No hay reseñas guardadas";
     }
+    container.appendChild(p);
     return {
       element: container
     };
@@ -128,10 +140,25 @@ export default function createEjercicio11() {
 
   const render = () => {
     const container = document.createElement("div");
-    container.appendChild(buildForm().element);
-    container.appendChild(buildReseñas().element);
+    container.classList.add("exercise-11-container");
+    const title = document.createElement("h2");
+    title.textContent= "Reseñas Restaurantes";
+    container.appendChild(title);
+    const form = buildForm().element
+    let reseñas = buildReseñas().element;
+    container.appendChild(form);
+    container.appendChild(reseñas);
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      
+      container.removeChild(reseñas);
+      reseñas = buildReseñas().element;
+      container.appendChild(reseñas);
+      
+    })
     return {
-    container
+      element: container
     };
   }
 
